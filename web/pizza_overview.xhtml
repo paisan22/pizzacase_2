@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="template.xhtml">
+
+    <ui:define name="title">
+        Pizza Overview
+    </ui:define>
+
+    <ui:define name="header">
+        Pizza Overview
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="pizzaForm" p:class="form-inline">
+            <h:panelGroup id="tablePanel">
+                <h:dataTable id="pizzaTable" styleClass="table table-bordered table-responsive"
+                             value="#{pizzaservice.getAll()}" var="t">
+                    <h:column>
+                        <f:facet name="header">Id</f:facet>
+                        #{t.id}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Name</f:facet>
+                        #{t.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Delete</f:facet>
+                        <h:commandLink id="delete" value="delete">
+                            <f:ajax execute="@form" listener="#{pizzaservice.delete(t.id)}" render="@form" />
+                        </h:commandLink>
+                    </h:column>
+                </h:dataTable>
+            </h:panelGroup>
+        </h:form>
+
+        <hr />
+
+        <h:form id="addForm">
+            <h:inputText id="pizzaname" value="#{pizzaservice.name}" />
+            <h:commandButton type="submit" action="#{pizzaservice.add(pizzaservice.name)}" value="add">
+                <f:ajax render="pizzaForm" execute="@form"/>
+            </h:commandButton>
+        </h:form>
+
+    <hr />
+        <h:form id="updateForm">
+            <h:inputText id="id" value="#{pizzaservice.id}" />
+            <h:inputText id="name" value="#{pizzaservice.name}" />
+
+            <h:commandButton type="submit"
+                             action="#{pizzaservice.update(pizzaservice.name, pizzaservice.id)}"
+                             value="update" >
+                <f:ajax render="pizzaForm" execute="@form" />
+            </h:commandButton>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+</html>
