@@ -7,5 +7,48 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
    <f:view>
       <h:outputLabel value="Hello, world"/>
+
+      <h:form>
+         <h:inputText id="pizzaname" value="#{pizzaservice.name}" />
+         <h:commandButton type="submit" action="#{pizzaservice.add(pizzaservice.name)}" value="add">
+            <f:ajax render="pizzaTable" />
+         </h:commandButton>
+      </h:form>
+
+      <hr />
+
+      <h:form>
+         <h:inputText id="pizzaID" value="#{pizzaservice.id}" />
+         <h:commandButton type="submit" action="#{pizzaservice.delete(pizzaservice.id)}" value="delete">
+            <f:ajax render="pizzaTable" />
+         </h:commandButton>
+      </h:form>
+
+      <hr />
+
+      <h:form>
+         <h:inputText id="id" value="#{pizzaservice.id}" />
+         <h:inputText id="name" value="#{pizzaservice.name}" />
+
+         <h:commandButton type="submit"
+                          action="#{pizzaservice.update(pizzaservice.name, pizzaservice.id)}"
+                          value="update" >
+            <f:ajax render="pizzaTable" />
+         </h:commandButton>
+      </h:form>
+
+      <hr />
+
+      <h:dataTable id="pizzaTable" border="1" value="#{pizzaservice.getAll()}" var="p">
+         <h:column>
+            <f:facet name="header">ID</f:facet>
+            #{p.id}
+         </h:column>
+         <h:column>
+            <f:facet name="header">Name</f:facet>
+            #{p.name}
+         </h:column>
+      </h:dataTable>
+
    </f:view>
 </html>

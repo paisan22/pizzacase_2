@@ -18,7 +18,8 @@ public class setup {
 
     @PostConstruct
     public void create() {
-        pizzaControllerInterface.add(new Pizza("Funghi"));
-        pizzaControllerInterface.add(new Pizza("Mozzerella"));
+        pizzaControllerInterface.add(new Pizza("Pizza 1"));
+        pizzaControllerInterface.add(new Pizza("Pizza 2"));
+        pizzaControllerInterface.add(new Pizza("Pizza 3"));
     }
 }
