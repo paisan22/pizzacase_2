@@ -1,44 +1,39 @@
-package web;
+package soap;
 
 import ejb.PizzaControllerInterface;
 import jpa.Pizza;
-import lombok.Data;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by paisanrietbroek on 18/11/2016.
+ * Created by paisanrietbroek on 19/11/2016.
  */
 
-@Data
-@Named("pizzaservice")
-@SessionScoped
-public class PizzaService implements Serializable {
-
-    private long id;
-    private String name;
+@WebService(name = "pizza_service")
+public class PizzaService {
 
     @EJB
     PizzaControllerInterface pizzaControllerInterface;
 
+    @WebMethod(operationName = "add")
     public Pizza add(String name) {
         return pizzaControllerInterface.add(new Pizza(name));
     }
 
+    @WebMethod(operationName = "delete")
     public Pizza delete(long id) {
         return pizzaControllerInterface.remove(id);
     }
 
+    @WebMethod(operationName = "update")
     public Pizza update(String name, long id) {
         return pizzaControllerInterface.update(name, id);
     }
 
+    @WebMethod(operationName = "getAll")
     public List<Pizza> getAll() {
         return pizzaControllerInterface.getAll();
     }
