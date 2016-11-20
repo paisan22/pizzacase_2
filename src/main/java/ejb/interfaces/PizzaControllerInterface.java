@@ -1,4 +1,4 @@
-package ejb;
+package ejb.interfaces;
 
 import jpa.Pizza;
 
@@ -11,8 +11,11 @@ import java.util.List;
 
 @Remote
 public interface PizzaControllerInterface {
-    Pizza add(Pizza p);
-    Pizza remove(Long id);
-    Pizza update(String name, long id);
-    List getAll();
+
+    void create(Pizza p);
+    Pizza read(long id);
+    void update(String name, long id);
+    void delete(Long id);
+
+    List readAll();
 }

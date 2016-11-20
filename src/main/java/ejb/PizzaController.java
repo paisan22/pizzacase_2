@@ -1,8 +1,10 @@
 package ejb;
 
+import ejb.interfaces.PizzaControllerInterface;
 import jpa.Pizza;
+import lombok.NoArgsConstructor;
 
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -11,33 +13,37 @@ import java.util.List;
  * Created by paisanrietbroek on 18/11/2016.
  */
 
-@Stateless
+@NoArgsConstructor
+@Stateful
 public class PizzaController implements PizzaControllerInterface {
 
     @PersistenceContext(unitName = "PizzaPU")
     private EntityManager em;
 
     @Override
-    public Pizza add(Pizza p) {
-            em.persist(p);
-            return p;
+    public void create(Pizza p) {
+        em.persist(p);
     }
 
     @Override
-    public Pizza remove(Long id) {
+    public Pizza read(long id) {
         Pizza pizza = em.find(Pizza.class, id);
-        em.remove(pizza);
         return pizza;
     }
 
     @Override
-    public Pizza update(String name, long id) {
-        em.createNamedQuery("update").setParameter("name" , name).setParameter("id", id).executeUpdate();
-        return em.find(Pizza.class, id);
+    public void update(String name, long id) {
+        em.createNamedQuery("updatePizza", Pizza.class).setParameter("name", name).setParameter("id", id).executeUpdate();
     }
 
     @Override
-    public List getAll() {
-        return em.createNamedQuery("getAll").getResultList();
+    public void delete(Long id) {
+        Pizza pizza = em.find(Pizza.class, id);
+        em.remove(pizza);
+    }
+
+    @Override
+    public List readAll() {
+        return em.createNamedQuery("getAllPizza").getResultList();
     }
 }

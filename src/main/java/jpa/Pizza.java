@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.annotation.Repeatable;
 
 /**
  * Created by paisanrietbroek on 18/11/2016.
@@ -15,11 +14,9 @@ import java.lang.annotation.Repeatable;
 @NoArgsConstructor
 @Entity(name = "pizza")
 @NamedQueries({
-    @NamedQuery(name = "update", query = "UPDATE pizza p SET p.name = :name WHERE p.id = :id"),
-    @NamedQuery(name = "getAll", query = "SELECT p FROM pizza p")
+    @NamedQuery(name = "updatePizza", query = "UPDATE pizza p SET p.name = :name WHERE p.id = :id"),
+    @NamedQuery(name = "getAllPizza", query = "SELECT p FROM pizza p")
 })
-
-
 public class Pizza implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +24,7 @@ public class Pizza implements Serializable {
 
     private String name;
 
-    public Pizza(String name) {
-        this.name = name;
-    }
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "pizza")
+    private OrderItem orderItem;
+
 }

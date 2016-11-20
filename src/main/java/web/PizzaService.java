@@ -1,14 +1,13 @@
 package web;
 
-import ejb.PizzaControllerInterface;
+import ejb.interfaces.PizzaControllerInterface;
 import jpa.Pizza;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.jws.WebMethod;
-import javax.jws.WebService;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,7 +16,8 @@ import java.util.List;
  */
 
 @Data
-@Named("pizzaservice")
+@Named("pizza_service")
+@NoArgsConstructor
 @SessionScoped
 public class PizzaService implements Serializable {
 
@@ -25,21 +25,23 @@ public class PizzaService implements Serializable {
     private String name;
 
     @EJB
-    PizzaControllerInterface pizzaControllerInterface;
+    private PizzaControllerInterface pizzaControllerInterface;
 
-    public Pizza add(String name) {
-        return pizzaControllerInterface.add(new Pizza(name));
+    public void add(String name) {
+        Pizza pizza = new Pizza();
+        pizza.setName(name);
+        pizzaControllerInterface.create(pizza);
     }
 
-    public Pizza delete(long id) {
-        return pizzaControllerInterface.remove(id);
+    public void delete(long id) {
+        pizzaControllerInterface.delete(id);
     }
 
-    public Pizza update(String name, long id) {
-        return pizzaControllerInterface.update(name, id);
+    public void update(String name, long id) {
+        pizzaControllerInterface.update(name, id);
     }
 
-    public List<Pizza> getAll() {
-        return pizzaControllerInterface.getAll();
+    public List getAll() {
+        return pizzaControllerInterface.readAll();
     }
 }

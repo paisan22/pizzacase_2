@@ -22,7 +22,7 @@
         <h:form id="pizzaForm" p:class="form-inline">
             <h:panelGroup id="tablePanel">
                 <h:dataTable id="pizzaTable" styleClass="table table-bordered table-responsive"
-                             value="#{pizzaservice.getAll()}" var="t">
+                             value="#{pizza_service.getAll()}" var="t">
                     <h:column>
                         <f:facet name="header">Id</f:facet>
                         #{t.id}
@@ -34,7 +34,7 @@
                     <h:column>
                         <f:facet name="header">Delete</f:facet>
                         <h:commandLink id="delete" value="delete">
-                            <f:ajax execute="@form" listener="#{pizzaservice.delete(t.id)}" render="@form" />
+                            <f:ajax execute="@form" listener="#{pizza_service.delete(t.id)}" render="@form" />
                         </h:commandLink>
                     </h:column>
                 </h:dataTable>
@@ -44,19 +44,19 @@
         <hr />
 
         <h:form id="addForm">
-            <h:inputText id="pizzaname" value="#{pizzaservice.name}" />
-            <h:commandButton type="submit" action="#{pizzaservice.add(pizzaservice.name)}" value="add">
+            <h:inputText id="pizzaname" value="#{pizza_service.name}" />
+            <h:commandButton type="submit" action="#{pizza_service.add(pizza_service.name)}" value="add">
                 <f:ajax render="pizzaForm" execute="@form"/>
             </h:commandButton>
         </h:form>
 
     <hr />
         <h:form id="updateForm">
-            <h:inputText id="id" value="#{pizzaservice.id}" />
-            <h:inputText id="name" value="#{pizzaservice.name}" />
+            <h:inputText id="id" value="#{pizza_service.id}" />
+            <h:inputText id="name" value="#{pizza_service.name}" />
 
             <h:commandButton type="submit"
-                             action="#{pizzaservice.update(pizzaservice.name, pizzaservice.id)}"
+                             action="#{pizza_service.update(pizza_service.name, pizza_service.id)}"
                              value="update" >
                 <f:ajax render="pizzaForm" execute="@form" />
             </h:commandButton>
