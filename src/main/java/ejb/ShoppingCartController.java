@@ -1,6 +1,7 @@
 package ejb;
 
 import ejb.interfaces.ShoppingCartControllerInterface;
+import jpa.OrderItem;
 import jpa.ShoppingCart;
 
 import javax.ejb.Stateful;
@@ -19,23 +20,33 @@ public class ShoppingCartController implements ShoppingCartControllerInterface {
     private EntityManager em;
 
     @Override
-    public ShoppingCart add(ShoppingCart o) {
-        em.persist(o);
-        return o;
+    public void create(ShoppingCart shoppingCart) {
+        em.persist(shoppingCart);
+
+        // work-around
+        em.flush();
+        for (OrderItem i : shoppingCart.getOrderItemCollection()) {
+            i.setShoppingCart(shoppingCart);
+        }
     }
 
     @Override
-    public ShoppingCart remove(Long id) {
+    public ShoppingCart read(long id) {
         return null;
     }
 
     @Override
-    public ShoppingCart update(String name, long id) {
-        return null;
+    public void update(String name, long id) {
+
     }
 
     @Override
-    public List<ShoppingCart> getAll() {
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public List readAll() {
         return null;
     }
 }

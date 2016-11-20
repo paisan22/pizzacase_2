@@ -2,8 +2,10 @@ package ejb;
 
 import ejb.interfaces.OrderItemControllerInterface;
 import ejb.interfaces.PizzaControllerInterface;
+import ejb.interfaces.ShoppingCartControllerInterface;
 import jpa.OrderItem;
 import jpa.Pizza;
+import jpa.ShoppingCart;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.annotation.PostConstruct;
@@ -11,6 +13,8 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -27,6 +31,9 @@ public class setup implements Serializable {
 
     @EJB
     private OrderItemControllerInterface orderItemControllerInterface;
+
+    @EJB
+    ShoppingCartControllerInterface shoppingCartControllerInterface;
 
     @PostConstruct
     public void create() {
@@ -55,8 +62,17 @@ public class setup implements Serializable {
             orderItem1.setPizza(pizzaControllerInterface.read(3));
             orderItem1.setAmount(8);
 
-            orderItemControllerInterface.create(orderItem);
-            orderItemControllerInterface.create(orderItem1);
+
+            // create 1 shopping cart
+            List<OrderItem> orderItemList = new ArrayList<>();
+            orderItemList.add(orderItem);
+            orderItemList.add(orderItem1);
+
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setOrderItemCollection(orderItemList);
+
+            shoppingCartControllerInterface.create(shoppingCart);
+
         } catch (Exception ex) {
             System.out.println("setup error: " + ex.getMessage());
         }

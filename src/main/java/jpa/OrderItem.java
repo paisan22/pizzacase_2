@@ -28,7 +28,7 @@ public class OrderItem implements Serializable {
 
     private int amount;
 
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn
-//    private ShoppingCart shoppingCart;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn
+    private ShoppingCart shoppingCart;
 }

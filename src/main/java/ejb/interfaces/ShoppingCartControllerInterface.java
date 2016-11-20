@@ -11,9 +11,11 @@ import java.util.List;
 @Remote
 public interface ShoppingCartControllerInterface {
 
-    ShoppingCart add(ShoppingCart o);
-    ShoppingCart remove(Long id);
-    ShoppingCart update(String name, long id);
-    List<ShoppingCart> getAll();
+    void create(ShoppingCart shoppingCart);
+    ShoppingCart read(long id);
+    void update(String name, long id);
+    void delete(Long id);
+
+    List readAll();
 
 }
